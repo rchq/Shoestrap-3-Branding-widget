@@ -29,39 +29,26 @@ class jb_header_widget extends WP_Widget {
 		echo $args['before_widget'];
 		
 		if ( shoestrap_getVariable( 'header_widget_toggle' ) == 1 ) :
-			echo '<div class="before-main-wrapper">';
-	
-			if ( $ss_settings['site_style'] == 'boxed' ) :
-				echo '<div class="container header-boxed">';
-			endif;
 	
 			echo '<div class="header-widget-wrapper">';
 	
 			if ( $ss_settings['site_style'] == 'wide' ) :
 				echo '<div class="container">';
+					echo '<div class="col-sm-12">';
 			endif;
 	
 			if ( $ss_settings['header_branding'] == 1 ) :
 				echo '<a class="brand-logo" href="' . home_url() . '/">' . Shoestrap_Branding::logo() . '</a>';
 			endif;
 	
-			if ( $ss_settings['header_branding'] == 1 ) :
-				$pullclass = ' class="pull-right"';
-			else :
-				$pullclass = null;
-			endif;
-	
 			if ( $ss_settings['site_style'] == 'wide' ) :
+					echo '</div >';
 				echo '</div >';
 			endif;
 	
 			echo '</div >';
 	
-			if ( $ss_settings['site_style'] == 'boxed' ) :
-				echo '</div >';
-			endif;
 	
-			echo '</div >';
 		endif;
 		
 		echo $args['after_widget'];
@@ -82,17 +69,11 @@ function shoestrap_header_widget_css() {
   $bg = shoestrap_getVariable( 'header_widget_bg');
   $cl = shoestrap_getVariable( 'header_widget_color' );
   
-  $header_margin_top    = shoestrap_getVariable( 'header_widget_margin_top' );
-  $header_margin_bottom = shoestrap_getVariable( 'header_widget_margin_bottom' );
-	
+
 	if ( shoestrap_getVariable( 'header_widget_toggle' ) == 1 ) {
 		$style = '.header-widget-wrapper{';
 			$style .= 'color: '.$cl.';';
 			$style .= 'background: '.$bg.';';
-			if ( shoestrap_getVariable( 'header_margin_widget_toggle' ) == 1 ) {
-				$style .= 'margin-top:'.$header_margin_top.'px;';
-				$style .= 'margin-bottom:'.$header_margin_bottom.'px;';
-			}
 		$style .= '}';
 	}
 
