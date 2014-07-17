@@ -11,7 +11,7 @@ class jb_header_widget extends WP_Widget {
 		parent::__construct(
 			'jb_header_widget', // Base ID
 			__('Shoestrap: Header', 'text_domain'), // Name
-			array( 'description' => __( 'Displays the logo from Shoestrap as a widget.', 'text_domain' ), ) // Args
+			array( 'description' => __( 'Displays the logo from Shoestrap', 'text_domain' ), ) // Args
 		);
 	}
 
@@ -64,20 +64,17 @@ function jb_header_widget_register() {
 add_action( 'widgets_init', 'jb_header_widget_register' );
 
 
-// register shoestrap jb_header_widget widget css styles
-function shoestrap_header_widget_css() {
-  $bg = shoestrap_getVariable( 'header_widget_bg');
-  $cl = shoestrap_getVariable( 'header_widget_color' );
-  
-
-	if ( shoestrap_getVariable( 'header_widget_toggle' ) == 1 ) {
-		$style = '.header-widget-wrapper{';
-			$style .= 'color: '.$cl.';';
-			$style .= 'background: '.$bg.';';
-		$style .= '}';
-	}
-
-	wp_add_inline_style( 'shoestrap_css', $style );
-
+// register shoestrap jb_header_widget widget less styles
+function jb_header_widget_styles( $bootstrap ) {
+	$bg = shoestrap_getVariable( 'header_widget_bg');
+	$cl = shoestrap_getVariable( 'header_widget_color' );
+	
+	return $bootstrap . '
+	.header-widget-wrapper {
+		color:' .$cl. ';
+		background:' .$bg. ';
+	}';
 }
-add_action( 'wp_enqueue_scripts', 'shoestrap_header_widget_css', 102 );
+if ( is_active_widget( '', '', 'jb_header_widget' ) ) {
+	add_filter( 'shoestrap_compiler', 'jb_header_widget_styles' );
+}
