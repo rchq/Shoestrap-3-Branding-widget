@@ -11,7 +11,7 @@ class jb_header_widget extends WP_Widget {
 		parent::__construct(
 			'jb_header_widget', // Base ID
 			__('Shoestrap: Header', 'text_domain'), // Name
-			array( 'description' => __( 'Displays the logo from Shoestrap', 'text_domain' ), ) // Args
+			array( 'description' => __( 'Displays the logo from Shoestrap as a widget.', 'text_domain' ), ) // Args
 		);
 	}
 
