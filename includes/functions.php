@@ -28,28 +28,23 @@ class jb_header_widget extends WP_Widget {
 
 		echo $args['before_widget'];
 		
-		if ( shoestrap_getVariable( 'header_widget_toggle' ) == 1 ) :
+		if ( shoestrap_getVariable( 'header_widget_toggle' ) == 1 ) {
+		?>
 	
-			echo '<div class="header-widget-wrapper">';
+			<div class="header-widget-wrapper">
+				<div class=<?php echo apply_filters( 'shoestrap_navbar_container_class', 'container' ); ?>
+					<div class="col-sm-12">
+						<?php
+            if ( $ss_settings['header_branding'] == 1 ) {
+              echo '<a class="brand-logo" href="' . home_url() . '/">' . Shoestrap_Branding::logo() . '</a>';
+						}
+            ?>
+						</div >
+				</div >
+			</div >
 	
-			if ( $ss_settings['site_style'] == 'wide' ) :
-				echo '<div class="container">';
-					echo '<div class="col-sm-12">';
-			endif;
-	
-			if ( $ss_settings['header_branding'] == 1 ) :
-				echo '<a class="brand-logo" href="' . home_url() . '/">' . Shoestrap_Branding::logo() . '</a>';
-			endif;
-	
-			if ( $ss_settings['site_style'] == 'wide' ) :
-					echo '</div >';
-				echo '</div >';
-			endif;
-	
-			echo '</div >';
-	
-	
-		endif;
+		<?php
+		}
 		
 		echo $args['after_widget'];
 	}

@@ -12,21 +12,21 @@ if ( !function_exists( 'shoestrap_hw_module_options' ) ) :
 		);
 			
 		$fields[] = array(
-			"title"			=> __( "Header Background Color", "shoestrap_hw" ),
-			"desc"      	=> __( "Select the background color for your header. Default: #EEEEEE.", "shoestrap_hw" ),
-			"id"        	=> "header_widget_bg",
-			"std"      		=> "#EEEEEE",
-			"customizer"	=> array(),
-			"type"      	=> "color",
+			'title'			=> __( 'Header Background Color', 'shoestrap_hw' ),
+			'desc'      	=> __( 'Select the background color for your header. Default: #EEEEEE.', 'shoestrap_hw' ),
+			'id'        	=> 'header_widget_bg',
+			'std'      		=> '#EEEEEE',
+			'customizer'	=> array(),
+			'type'      	=> 'color',
 		);
 	
 		$fields[] = array(
-			"title"			=> __("Header Text Color", "shoestrap_hw"),
-			"desc"      	=> __("Select the text color for your header. Default: #333333.", "shoestrap_hw"),
-			"id"        	=> "header_widget_color",
-			"std"       	=> "#333333",
-			"customizer"	=> array(),
-			"type"      	=> "color",
+			'title'			=> __('Header Text Color', 'shoestrap_hw'),
+			'desc'      	=> __('Select the text color for your header. Default: #333333.', 'shoestrap_hw'),
+			'id'        	=> 'header_widget_color',
+			'std'       	=> '#333333',
+			'customizer'	=> array(),
+			'type'      	=> 'color',
 		);
 			
 		$section['fields'] = $fields;
@@ -36,5 +36,7 @@ if ( !function_exists( 'shoestrap_hw_module_options' ) ) :
 		$sections[] = $section;
 		return $sections;
 	}
-	add_filter( 'redux/options/' . REDUX_OPT_NAME . '/sections', 'shoestrap_hw_module_options' );
+	if ( is_active_widget( '', '', 'jb_header_widget' ) ) {
+		add_filter( 'redux/options/' . REDUX_OPT_NAME . '/sections', 'shoestrap_hw_module_options' );
+	}
 endif;
