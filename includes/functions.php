@@ -28,16 +28,19 @@ class jb_header_widget extends WP_Widget {
 
 		echo $args['before_widget'];
 		
-		if ( shoestrap_getVariable( 'header_widget_toggle' ) == 1 ) {
+		if ( $ss_settings['header_widget_toggle'] == 1 ) {
 		?>
 	
 			<div class="header-widget-wrapper">
-				<div class=<?php echo apply_filters( 'shoestrap_navbar_container_class', 'container' ); ?>
+				<div class="<?php echo apply_filters( 'shoestrap_navbar_container_class', 'container' ); ?>">
 					<div class="col-sm-12">
 						<?php
-            if ( $ss_settings['header_branding'] == 1 ) {
-              echo '<a class="brand-logo" href="' . home_url() . '/">' . Shoestrap_Branding::logo() . '</a>';
-						}
+							if ( !empty($ss_settings['header_widget_url']) ) {
+								$url = $ss_settings['header_widget_url'];
+							} else {
+								$url = home_url();
+							}
+              echo '<a class="brand-logo" href="' . $url . '/">' . Shoestrap_Branding::logo() . '</a>';
             ?>
 						</div >
 				</div >
@@ -54,15 +57,15 @@ class jb_header_widget extends WP_Widget {
 
 // register jb_header_widget widget
 function jb_header_widget_register() {
-    register_widget( 'jb_header_widget' );
+	register_widget( 'jb_header_widget' );
 }
 add_action( 'widgets_init', 'jb_header_widget_register' );
 
 
 // register shoestrap jb_header_widget widget less styles
 function jb_header_widget_styles( $bootstrap ) {
-	$bg = shoestrap_getVariable( 'header_widget_bg');
-	$cl = shoestrap_getVariable( 'header_widget_color' );
+	$bg = $ss_settings['header_widget_bg'];
+	$cl = $ss_settings['header_widget_color'];
 	
 	return $bootstrap . '
 	.header-widget-wrapper {
