@@ -30,7 +30,6 @@ class jb_header_widget extends WP_Widget {
 		
 		if ( $ss_settings['header_widget_toggle'] == 1 ) {
 		?>
-	
 			<div class="header-widget-wrapper">
 				<div class="<?php echo apply_filters( 'shoestrap_navbar_container_class', 'container' ); ?>">
 					<div class="col-sm-12">
@@ -64,6 +63,8 @@ add_action( 'widgets_init', 'jb_header_widget_register' );
 
 // register shoestrap jb_header_widget widget less styles
 function jb_header_widget_styles( $bootstrap ) {
+	global $ss_settings;
+	
 	$bg = $ss_settings['header_widget_bg'];
 	$cl = $ss_settings['header_widget_color'];
 	
