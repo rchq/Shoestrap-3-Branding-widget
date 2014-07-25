@@ -24,7 +24,7 @@ if ( !function_exists( 'shoestrap_hw_module_options' ) ) {
 			'title'				=> __( 'Header Background Color', 'shoestrap_hw' ),
 			'desc'      	=> __( 'Select the background color for your header. Default: #EEEEEE.', 'shoestrap_hw' ),
 			'id'        	=> 'header_widget_bg',
-			'default'     => '#428bca',
+			'default'     => '#eeeeee',
 			'compiler'    => true,
 			'transparent' => false,
 			'type'        => 'color'
@@ -34,7 +34,7 @@ if ( !function_exists( 'shoestrap_hw_module_options' ) ) {
 			'title'				=> __('Header Text Color', 'shoestrap_hw'),
 			'desc'      	=> __('Select the text color for your header. Default: #333333.', 'shoestrap_hw'),
 			'id'        	=> 'header_widget_color',
-			'default'     => '#428bca',
+			'default'     => '#333333',
 			'compiler'    => true,
 			'transparent' => false,
 			'type'        => 'color'
