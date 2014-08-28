@@ -1,2 +1,2 @@
-Shoestrap-3-header-widget
+Shoestrap-3-branding-widget
 =========================
