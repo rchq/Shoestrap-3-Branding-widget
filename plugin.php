@@ -12,27 +12,6 @@
 	*
 */
 
-if ( !defined( 'REDUX_OPT_NAME' ) )
- define( 'REDUX_OPT_NAME', 'shoestrap' );
-
-// plugin folder url
-if ( !defined( 'S3HW_PLUGIN_URL' ) )
- define( 'S3HW_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
-
-// plugin folder path
-if ( !defined( 'S3HW_PLUGIN_DIR' ) )
- define( 'S3HW_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
-
-// plugin root file
-if ( !defined( 'S3HW_PLUGIN_FILE' ) )
- define( 'S3HW_PLUGIN_FILE', __FILE__ );
-
-function shoestrap_hw_include_files() {
- include_once( S3HW_PLUGIN_DIR . 'includes/admin.php' );
- //include_once( S3HW_PLUGIN_DIR . 'includes/functions.php' );
-}
-add_action( 'shoestrap_include_files', 'shoestrap_hw_include_files' );
-
 class ss_branding_widget extends WP_Widget {
 	
 	// Sets the widgets slug
@@ -47,9 +26,12 @@ class ss_branding_widget extends WP_Widget {
     'description' => __( 'Displays the logo from Shoestrap.', $this->get_widget_slug() )
    )
   );
+		
+		// Refreshing the widget's cached output with each new post
+		add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
+		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
+		add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
 
-		// Add style to the shoestrap compiler
-		add_filter( 'shoestrap_compiler', array( $this, 'styles' ) );
  }
 	
 	
@@ -85,7 +67,14 @@ class ss_branding_widget extends WP_Widget {
   extract( $args, EXTR_SKIP );
 
   $widget_string = $before_widget;
-
+		
+  // pull urll from backend
+		if ( !empty( $instance['url'] ) ) {
+			$url = $instance['url'];
+		} else {
+			$url = home_url();
+		} 
+		
   ob_start();
   include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
   $widget_string .= ob_get_clean();
@@ -98,23 +87,53 @@ class ss_branding_widget extends WP_Widget {
   print $widget_string;
 
  } // end widget
-
 	
- /**
-	 * Register widget less styles
-  */
- public function styles( $bootstrap ) {
-  global $ss_settings;
 	
-  $bg = $ss_settings['branding_widget_bg'];
-
-  return $bootstrap . '
-	  .' . $this->get_widget_slug() . '-wrapper {
-    background: ' . $bg . ';
-   }';
+ public function flush_widget_cache() 
+ {
+  wp_cache_delete( $this->get_widget_slug(), 'widget' );
  }
 	
 	
-}
+ /**
+  * Processes the widget's options to be saved.
+  *
+  */
+ public function update( $new_instance, $old_instance ) {
 
+  $instance = $old_instance;
+
+  $instance['url'] = strip_tags( $new_instance['url'] );
+
+  return $instance;
+
+ } // end widget
+	
+	
+ /**
+  * Generates the administration form for the widget.
+  *
+  */
+ public function form( $instance ) {
+
+  $url = get_site_url();
+		
+  //Set up some default widget settings.
+  $defaults = array( 
+		 'title'       => 'URL:',
+		 'url'         => '',
+			'placeholder' => $url,
+		);
+
+  $instance = wp_parse_args(
+   (array) $instance, $defaults
+  );
+
+  // Display the admin form
+  include( plugin_dir_path(__FILE__) . 'views/admin.php' );
+
+ } // end form
+	
+	
+}
 add_action( 'widgets_init', create_function( '', 'register_widget("ss_branding_widget");' ) );
