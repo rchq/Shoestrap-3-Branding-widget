@@ -12,6 +12,10 @@
 	*
 */
 
+if ( ! defined( 'ABSPATH' ) ) { 
+    exit; // Exit if accessed directly
+}
+
 class ss_branding_widget extends WP_Widget {
 	
 	// Sets the widgets slug
