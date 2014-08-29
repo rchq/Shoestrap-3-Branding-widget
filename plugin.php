@@ -7,10 +7,10 @@
  * Version:     0.2
  * Author:      Jon Brim
  * Author URI:  http://rchq.com
-	*
-	* @copyright 2014 Jon Brim
-	*
-*/
+ *
+ * @copyright 2014 Jon Brim
+ *
+ */
 
 if ( ! defined( 'ABSPATH' ) ) { 
     exit; // Exit if accessed directly
@@ -18,10 +18,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class ss_branding_widget extends WP_Widget {
 	
-	// Sets the widgets slug
-	protected $widget_slug = 'branding_widget';
+ // Sets the widgets slug
+ protected $widget_slug = 'branding_widget';
 
-	public function __construct() {
+ public function __construct() {
   parent::__construct(
    $this->get_widget_slug(),
    __( 'Shoestrap: Branding', $this->get_widget_slug() ),
@@ -31,10 +31,10 @@ class ss_branding_widget extends WP_Widget {
    )
   );
 		
-		// Refreshing the widget's cached output with each new post
-		add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
-		add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
-		add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
+  // Refreshing the widget's cached output with each new post
+  add_action( 'save_post',    array( $this, 'flush_widget_cache' ) );
+  add_action( 'deleted_post', array( $this, 'flush_widget_cache' ) );
+  add_action( 'switch_theme', array( $this, 'flush_widget_cache' ) );
 
  }
 	
@@ -62,22 +62,22 @@ class ss_branding_widget extends WP_Widget {
 
   if ( ! isset ( $args['widget_id'] ) ) {
    $args['widget_id'] = $this->id;
-		}
+  }
 
   if ( isset ( $cache[ $args['widget_id'] ] ) ) {
    return print $cache[ $args['widget_id'] ];
-		}
+  }
 		
   extract( $args, EXTR_SKIP );
 
   $widget_string = $before_widget;
 		
   // pull urll from backend
-		if ( !empty( $instance['url'] ) ) {
-			$url = $instance['url'];
-		} else {
-			$url = home_url();
-		} 
+  if ( !empty( $instance['url'] ) ) {
+   $url = $instance['url'];
+  } else {
+   $url = home_url();
+  } 
 		
   ob_start();
   include( plugin_dir_path( __FILE__ ) . 'views/widget.php' );
@@ -124,10 +124,10 @@ class ss_branding_widget extends WP_Widget {
 		
   //Set up some default widget settings.
   $defaults = array( 
-		 'title'       => 'URL:',
-		 'url'         => '',
-			'placeholder' => $url,
-		);
+   'title'       => 'URL:',
+   'url'         => '',
+   'placeholder' => $url,
+  );
 
   $instance = wp_parse_args(
    (array) $instance, $defaults
