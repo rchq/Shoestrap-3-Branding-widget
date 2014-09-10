@@ -106,7 +106,7 @@ class ss_branding_widget extends WP_Widget {
 
     $instance = $old_instance;
 		
-    $instance['enable_url'] = strip_tags( $new_instance['enable_url'] );
+    $instance['url'] = strip_tags( $new_instance['url'] );
 
     return $instance;
 
